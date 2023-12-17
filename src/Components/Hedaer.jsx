@@ -1,7 +1,12 @@
  
+import { useContext } from 'react';
 import { NavLink } from 'react-router-dom';
+import { AuthContext } from '../Provider/AuthProvider';
 
 const Hedaer = () => {
+
+    const {user} = useContext(AuthContext)
+
     const navLinks = <>
         <li><NavLink to="/">Home</NavLink></li>
         <li><NavLink to="/Login">Login</NavLink></li>
@@ -26,7 +31,10 @@ const Hedaer = () => {
                 </ul>
             </div>
             <div className="navbar-end">
-                <a className="btn">About</a>
+                {
+                    user && <span>{user.email}</span>
+                }
+                <a className="btn">Sing-Out</a>
             </div>
         </div>
     );
