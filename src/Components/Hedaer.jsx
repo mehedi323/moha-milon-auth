@@ -1,11 +1,21 @@
  
 import { useContext } from 'react';
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { AuthContext } from '../Provider/AuthProvider';
 
 const Hedaer = () => {
 
-    const {user} = useContext(AuthContext)
+    const {user, logOut} = useContext(AuthContext)
+
+    const handleLogOut = () =>{
+        logOut()
+        .then(()=>{
+            console.log('User logOut Successfully');
+        })
+        .catch(error=>{
+            console.log(error);
+        })
+    }
 
     const navLinks = <>
         <li><NavLink to="/">Home</NavLink></li>
@@ -32,9 +42,13 @@ const Hedaer = () => {
             </div>
             <div className="navbar-end">
                 {
-                    user && <span>{user.email}</span>
+                    user ? <>
+                    <span>{user.email}</span>
+                    <a onClick={handleLogOut} className="btn">Sing-Out</a>
+                    </>
+                    : <Link to='/login'>Login</Link>
                 }
-                <a className="btn">Sing-Out</a>
+               
             </div>
         </div>
     );
